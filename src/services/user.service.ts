@@ -60,7 +60,8 @@ export const UserLogin =async(data: loginValidatorType)=>{
 //     return { success: false, message: "Phone number not verified." };
 //   }
 
-    const matchPassword = await bcrypt.compare(password, user.password);
+const matchPassword = await bcrypt.compare(password, user.password);
+;
   if (!matchPassword) {
     return { success: false, message: "Invalid credentials." };
   }

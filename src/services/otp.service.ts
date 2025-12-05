@@ -47,7 +47,7 @@ export const generateOtp = async (data: otpValidatorType) => {
 
       return {
         success: false,
-        message: "Too many attempts. Try again time.",
+        message: "Too many attempts. Try again tomorrow.",
         waitSeconds,
       };
     }
