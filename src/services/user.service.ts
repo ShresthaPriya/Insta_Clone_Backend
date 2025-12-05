@@ -2,6 +2,7 @@ import { prisma } from "../lib/prisma"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { registerValidatorType, loginValidatorType} from "../validator/user.validator"
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/token";
 
 export const RegisterUser = async (data: registerValidatorType) => {
 
@@ -40,7 +41,7 @@ export const RegisterUser = async (data: registerValidatorType) => {
 };
 
 export const UserLogin =async(data: loginValidatorType)=>{
-    const { phoneNumber, password, phoneVarified} = data;
+    const { phoneNumber, password} = data;
 
     const user = await prisma.user.findUnique({
         where: {phoneNumber},
@@ -50,24 +51,40 @@ export const UserLogin =async(data: loginValidatorType)=>{
     //user exists? Check
     if(!user){
         return{
-            success: false, message: "User not found."
+            success: false, message: "Invalid credentials."
         };
     }
 
-    //is phone varified? check
-    if (!user.phoneVerified) {
-    return { success: false, message: "Phone number not verified." };
+//     //is phone varified? check
+//     if (!user.phoneVerified) {
+//     return { success: false, message: "Phone number not verified." };
+//   }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+  if (!matchPassword) {
+    return { success: false, message: "Invalid credentials." };
   }
 
-  const matchPassword = await bcrypt.compare(password, user.password);
-  if(!matchPassword){
-    return{
-        success: false,
-        message: "Invalid credential"
-    }
-  };
 
-  const token = await jwt.sign()
+  const accessToken = generateAccessToken(user.id);
+  const refreshToken = generateRefreshToken(user.id);
+
+  return {
+    success: true,
+    message: "Login successful.",
+    accessToken,
+    refreshToken,
+    user: {
+      id: user.id,
+      fullName: user.fullName,
+      userName: user.userName,
+      phoneNumber: user.phoneNumber,
+    },
+  };
+};
+
+
+
 
   
-}
+

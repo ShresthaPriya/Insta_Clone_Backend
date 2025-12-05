@@ -3,14 +3,6 @@ import { prisma } from "../lib/prisma";
 import { otpValidatorType } from "../validator/otp.validator";
 import { RegisterUser } from "./user.service";
 
-const fibonacciMinutes = [2, 3, 5, 8, 13];
-
-const getWaitMinutes = (attempt: number) => {
-  if (attempt <= 0) return fibonacciMinutes[0];
-  if (attempt > fibonacciMinutes.length) return fibonacciMinutes[fibonacciMinutes.length - 1];
-  return fibonacciMinutes[attempt - 1];
-};
-
 export const generateOtp = async (data: otpValidatorType) => {
   const { phoneNumber, userInfo } = data;
   const maxAttempts = 5;
@@ -37,25 +29,25 @@ export const generateOtp = async (data: otpValidatorType) => {
     attemptCount = existingOtp.attemptCount + 1;
 
     if (attemptCount > maxAttempts) {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      tomorrow.setHours(0, 0, 0, 0);
+      const time = new Date();
+      time.setDate(time.getDate() + 1);
+      time.setHours(0, 0, 0, 0);
 
       const waitSeconds = Math.ceil(
-        (tomorrow.getTime() - now.getTime()) / 1000
+        (time.getTime() - now.getTime()) / 1000
       );
 
       await prisma.otp.update({
         where: { id: existingOtp.id },
         data: {
-          nextAttemptAt: tomorrow,
+          nextAttemptAt: time,
           attemptCount: existingOtp.attemptCount,
         },
       });
 
       return {
         success: false,
-        message: "Too many attempts. Try again tomorrow.",
+        message: "Too many attempts. Try again time.",
         waitSeconds,
       };
     }

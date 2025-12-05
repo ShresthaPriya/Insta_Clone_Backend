@@ -15,7 +15,7 @@ export const loginSchema = z.object({
 
     phoneNumber: z.string().regex(/^(98|97|91)\d{8}$/).length(10),
     password: z.string().min(6, "Password must be at least 6 characters long"),
-    phoneVarified: z.boolean()
+    // phoneVarified: z.boolean()
 
 });
 export type loginValidatorType = z.infer<typeof loginSchema>;
