@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Otp = Prisma.OtpModel
+/**
+ * Model Post
+ * 
+ */
+export type Post = Prisma.PostModel

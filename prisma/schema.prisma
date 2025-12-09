@@ -29,6 +29,8 @@ model User {
   emailVerified Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+    posts         Post[]
+
   // isVarified    Boolean  @default(false)
 }
 
@@ -36,9 +38,29 @@ model Otp {
   id            String   @id @default(uuid())
   phoneNumber   String
   otp           String
-  expiredAt     DateTime
+  expiredAt     DateTime? @default(now())
   nextAttemptAt DateTime
   createdAt     DateTime @default(now())
   userInfo      Json
   attemptCount  Int      @default(0)
 }
+
+
+model Post {
+  id         String   @id @default(uuid())
+
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  caption    String?
+  tags       String?
+  location   String?
+  urls       String[]
+
+  likes      Int      @default(0)
+  comments   Int      @default(0)
+
+  createdAt  DateTime @default(now())
+  @@map("posts")
+}
+

@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Otp: 'Otp'
+  Otp: 'Otp',
+  Post: 'Post'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -91,6 +92,7 @@ export const OtpScalarFieldEnum = {
   id: 'id',
   phoneNumber: 'phoneNumber',
   otp: 'otp',
+  expiredAt: 'expiredAt',
   nextAttemptAt: 'nextAttemptAt',
   createdAt: 'createdAt',
   userInfo: 'userInfo',
@@ -98,6 +100,21 @@ export const OtpScalarFieldEnum = {
 } as const
 
 export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  caption: 'caption',
+  tags: 'tags',
+  location: 'location',
+  urls: 'urls',
+  likes: 'likes',
+  comments: 'comments',
+  createdAt: 'createdAt'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
 export const SortOrder = {
