@@ -53,7 +53,11 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Otp: 'Otp',
-  Post: 'Post'
+  Post: 'Post',
+  Comments: 'Comments',
+  Like: 'Like',
+  CommentLike: 'CommentLike',
+  UserFollows: 'UserFollows'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,6 +80,9 @@ export const UserScalarFieldEnum = {
   id: 'id',
   fullName: 'fullName',
   userName: 'userName',
+  user_profile: 'user_profile',
+  bio: 'bio',
+  gender: 'gender',
   email: 'email',
   phoneNumber: 'phoneNumber',
   password: 'password',
@@ -109,12 +116,53 @@ export const PostScalarFieldEnum = {
   tags: 'tags',
   location: 'location',
   urls: 'urls',
-  likes: 'likes',
-  comments: 'comments',
+  likesCount: 'likesCount',
+  commentsCount: 'commentsCount',
   createdAt: 'createdAt'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const CommentsScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  parentCommentId: 'parentCommentId',
+  text: 'text',
+  createdAt: 'createdAt'
+} as const
+
+export type CommentsScalarFieldEnum = (typeof CommentsScalarFieldEnum)[keyof typeof CommentsScalarFieldEnum]
+
+
+export const LikeScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
+
+
+export const CommentLikeScalarFieldEnum = {
+  id: 'id',
+  commentId: 'commentId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type CommentLikeScalarFieldEnum = (typeof CommentLikeScalarFieldEnum)[keyof typeof CommentLikeScalarFieldEnum]
+
+
+export const UserFollowsScalarFieldEnum = {
+  followerId: 'followerId',
+  followingId: 'followingId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserFollowsScalarFieldEnum = (typeof UserFollowsScalarFieldEnum)[keyof typeof UserFollowsScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,32 +1,32 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { prisma } from "../lib/prisma";
+import { verifyAccessToken, TokenPayload } from "../utils/token";
 
 export interface AuthRequest extends Request {
-  user?: JwtPayload | string;
+  user?: TokenPayload;
 }
 
-export const validateToken = (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+export const validateToken = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader?.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Authorization token missing" });
   }
 
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET as string
-    );
+    const decoded = verifyAccessToken(token);
 
-    req.user = decoded; 
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+      select: { id: true, userName: true },
+    });
+
+    if (!user) return res.status(401).json({ message: "User does not exist" });
+
+    req.user = { id: user.id, userName: user.userName };
     next();
-  } catch (error) {
+  } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });
   }
 };

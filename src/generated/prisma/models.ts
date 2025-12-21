@@ -11,4 +11,8 @@
 export type * from './models/User'
 export type * from './models/Otp'
 export type * from './models/Post'
+export type * from './models/Comments'
+export type * from './models/Like'
+export type * from './models/CommentLike'
+export type * from './models/UserFollows'
 export type * from './commonInputTypes'

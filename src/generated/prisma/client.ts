@@ -52,3 +52,23 @@ export type Otp = Prisma.OtpModel
  * 
  */
 export type Post = Prisma.PostModel
+/**
+ * Model Comments
+ * 
+ */
+export type Comments = Prisma.CommentsModel
+/**
+ * Model Like
+ * 
+ */
+export type Like = Prisma.LikeModel
+/**
+ * Model CommentLike
+ * 
+ */
+export type CommentLike = Prisma.CommentLikeModel
+/**
+ * Model UserFollows
+ * 
+ */
+export type UserFollows = Prisma.UserFollowsModel

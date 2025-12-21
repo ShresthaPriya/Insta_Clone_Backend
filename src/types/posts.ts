@@ -4,3 +4,11 @@ export interface CreatePostInput {
   location?: string;
   urls: string[];
 }
+
+
+export interface CommentInput{
+  postId: string;
+  userId: string;
+  text: string;
+  parentCommentId?: string | null;
+}

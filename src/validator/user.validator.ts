@@ -20,3 +20,19 @@ export const loginSchema = z.object({
 });
 export type loginValidatorType = z.infer<typeof loginSchema>;
 
+export const profileSchema = z.object({
+  fullName: z.string().min(3, "Full name must be at least 3 characters").optional(),
+  userName: z.string().min(3, "Username must be at least 3 characters").optional(),
+  bio: z.string().max(200, "Bio must be at most 200 characters").optional(),
+  email: z.string().email("Invalid email address").optional(),
+  phoneNumber: z
+    .string()
+    .regex(/^(98|97|91)\d{8}$/, "Invalid phone number")
+    .length(10)
+    .optional(),
+  gender: z.enum(["Male", "Female", "Prefer not to say"]).optional(),
+  // user_profile: z.string().url("Invalid URL").optional(),
+});
+
+export type ProfileValidatorType = z.infer<typeof profileSchema>;
+

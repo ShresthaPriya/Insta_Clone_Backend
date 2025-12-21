@@ -2,7 +2,7 @@ import express, { urlencoded } from "express"
 import "dotenv/config"
 import router from "./routes/index.route";
 import cors from "cors";
-import { upload } from "./middleware/upload";
+// import { upload } from "./middleware/upload";
 
 const PORT = process.env.PORT;
 

@@ -3,10 +3,22 @@ import { prisma } from "../lib/prisma";
 import { otpValidatorType } from "../validator/otp.validator";
 import { RegisterUser } from "./user.service";
 
+
 export const generateOtp = async (data: otpValidatorType) => {
   const { phoneNumber, userInfo } = data;
   const maxAttempts = 5;
   const now = new Date();
+
+  const existingUser = await prisma.user.findUnique({
+    where: { phoneNumber },
+  });
+
+  if (existingUser) {
+    return {
+      success: false,
+      message: "Phone number is already registered.",
+    };
+  }
 
   const existingOtp = await prisma.otp.findFirst({
     where: { phoneNumber },
@@ -22,10 +34,11 @@ export const generateOtp = async (data: otpValidatorType) => {
       );
       return {
         success: false,
-        message: "Please wait before requesting another OTP.",
+        message: `Please wait for ${waitSeconds}s before requesting another OTP.`,
         waitSeconds,
       };
     }
+
     attemptCount = existingOtp.attemptCount + 1;
 
     if (attemptCount > maxAttempts) {
@@ -33,9 +46,7 @@ export const generateOtp = async (data: otpValidatorType) => {
       time.setDate(time.getDate() + 1);
       time.setHours(0, 0, 0, 0);
 
-      const waitSeconds = Math.ceil(
-        (time.getTime() - now.getTime()) / 1000
-      );
+      const waitSeconds = Math.ceil((time.getTime() - now.getTime()) / 1000);
 
       await prisma.otp.update({
         where: { id: existingOtp.id },
@@ -96,6 +107,7 @@ export const generateOtp = async (data: otpValidatorType) => {
     waitSeconds,
   };
 };
+
 
 
 export const verifyOtp = async (data: otpValidatorType) => {
