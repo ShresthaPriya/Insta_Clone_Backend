@@ -3,6 +3,7 @@ export interface CreatePostInput {
   caption?: string;
   location?: string;
   urls: string[];
+  
 }
 
 
@@ -11,4 +12,12 @@ export interface CommentInput{
   userId: string;
   text: string;
   parentCommentId?: string | null;
+}
+
+export interface EditPostInput {
+  postId: string;
+  userId: string; 
+  caption?: string;
+  location?: string;
+  urls: string[];
 }

@@ -15,42 +15,51 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String        @id @default(uuid())
+  id            String   @id @default(uuid())
   fullName      String
-  userName      String        @unique
+  userName      String   @unique
   user_profile  String?
   bio           String?
   gender        String?
-  email         String?       @unique
-  phoneNumber   String        @unique
+  email         String?  @unique
+  phoneNumber   String   @unique
   password      String
-  phoneVerified Boolean       @default(false)
-  emailVerified Boolean       @default(false)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  posts         Post[]
-  comments      Comments[]
-  likes         Like[]
-  commentLikes  CommentLike[]
+  phoneVerified Boolean  @default(false)
+  emailVerified Boolean  @default(false)
+  isPrivate     Boolean  @default(false)
 
-  followers     UserFollows[] @relation("FollowersRelation")
-  following     UserFollows[] @relation("FollowingRelation")
-   @@map("users")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts        Post[]
+  comments     Comments[]
+  likes        Like[]
+  commentLikes CommentLike[]
+
+  followers UserFollows[] @relation("FollowersRelation")
+  following UserFollows[] @relation("FollowingRelation")
+
+  requestSent    FollowRequest[] @relation("SentRequestsRelation")
+  requestReceive FollowRequest[] @relation("ReceivedRequestsRelation")
+
+  notifications Notification[]
+
+  @@map("users")
 }
 
 model Otp {
-  id            String    @id @default(uuid())
+  id            String   @id @default(uuid())
   phoneNumber   String
   otp           String
   expiredAt     DateTime? @default(now())
   nextAttemptAt DateTime
-  createdAt     DateTime  @default(now())
+  attemptCount  Int      @default(0)
   userInfo      Json
-  attemptCount  Int       @default(0)
+  createdAt     DateTime @default(now())
+
   @@map("otp")
 }
 
@@ -58,30 +67,37 @@ model Post {
   id String @id @default(uuid())
 
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  caption       String?
-  tags          String?
-  location      String?
-  urls          String[]
-  likesCount    Int      @default(0)
-  commentsCount Int      @default(0)
+  caption  String?
+  tags     String?
+  location String?
+  urls     String[]
 
-  likes    Like[]
-  comments Comments[]
+  likesCount    Int @default(0)
+  commentsCount Int @default(0)
 
-  createdAt DateTime @default(now())
+  likes         Like[]
+  comments      Comments[]
+  notifications Notification[] @relation("PostNotifications")
 
+  createdAt DateTime  @default(now())
+  deletedAt DateTime? 
+
+  isDeleted Boolean @default(false)
+
+  @@index([userId])
   @@map("posts")
 }
 
 model Comments {
   id     String @id @default(uuid())
+
   postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   parentCommentId String?
 
@@ -91,46 +107,100 @@ model Comments {
   text      String
   createdAt DateTime @default(now())
 
-  likes CommentLike[]
+  likes         CommentLike[]
+  notifications Notification[] @relation("CommentNotifications")
 
+  @@index([postId])
+  @@index([userId])
   @@map("comments")
 }
 
 model Like {
-  id     String @id @default(uuid())
+  id String @id @default(uuid())
+
   postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
   @@map("likes")
 }
 
 model CommentLike {
-  id        String   @id @default(uuid())
+  id String @id @default(uuid())
+
   commentId String
   comment   Comments @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
   @@unique([commentId, userId])
+  @@index([commentId])
+  @@index([userId])
   @@map("comment_likes")
 }
 
 model UserFollows {
-  follower     User    @relation("FollowingRelation", fields: [followerId], references: [id])
-  followerId   String
-  following    User    @relation("FollowersRelation", fields: [followingId], references: [id])
-  followingId  String
-  createdAt    DateTime @default(now())
+  followerId  String
+  follower    User @relation("FollowingRelation", fields: [followerId], references: [id])
+
+  followingId String
+  following   User @relation("FollowersRelation", fields: [followingId], references: [id])
+
+  createdAt DateTime @default(now())
 
   @@id([followerId, followingId])
   @@map("user_follows")
+}
+
+model FollowRequest {
+  id String @id @default(uuid())
+
+  senderId String
+  sender   User @relation("SentRequestsRelation", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId String
+  receiver   User @relation("ReceivedRequestsRelation", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  notifications Notification[] @relation("FollowRequestNotifications")
+
+  createdAt DateTime @default(now())
+
+  @@unique([senderId, receiverId])
+  @@map("follow_requests")
+}
+
+model Notification {
+  id      String @id @default(uuid())
+
+  type    String
+  content String
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId String?
+  post   Post? @relation("PostNotifications", fields: [postId], references: [id], onDelete: Cascade)
+
+  commentId String?
+  comment   Comments? @relation("CommentNotifications", fields: [commentId], references: [id], onDelete: Cascade)
+
+  followRequestId String?
+  followRequest   FollowRequest? @relation("FollowRequestNotifications", fields: [followRequestId], references: [id], onDelete: Cascade)
+
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, isRead])
+  @@map("notifications")
 }
 

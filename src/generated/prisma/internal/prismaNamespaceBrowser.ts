@@ -57,7 +57,9 @@ export const ModelName = {
   Comments: 'Comments',
   Like: 'Like',
   CommentLike: 'CommentLike',
-  UserFollows: 'UserFollows'
+  UserFollows: 'UserFollows',
+  FollowRequest: 'FollowRequest',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -88,6 +90,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   phoneVerified: 'phoneVerified',
   emailVerified: 'emailVerified',
+  isPrivate: 'isPrivate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -101,9 +104,9 @@ export const OtpScalarFieldEnum = {
   otp: 'otp',
   expiredAt: 'expiredAt',
   nextAttemptAt: 'nextAttemptAt',
-  createdAt: 'createdAt',
+  attemptCount: 'attemptCount',
   userInfo: 'userInfo',
-  attemptCount: 'attemptCount'
+  createdAt: 'createdAt'
 } as const
 
 export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
@@ -118,7 +121,9 @@ export const PostScalarFieldEnum = {
   urls: 'urls',
   likesCount: 'likesCount',
   commentsCount: 'commentsCount',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  isDeleted: 'isDeleted'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -163,6 +168,31 @@ export const UserFollowsScalarFieldEnum = {
 } as const
 
 export type UserFollowsScalarFieldEnum = (typeof UserFollowsScalarFieldEnum)[keyof typeof UserFollowsScalarFieldEnum]
+
+
+export const FollowRequestScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  createdAt: 'createdAt'
+} as const
+
+export type FollowRequestScalarFieldEnum = (typeof FollowRequestScalarFieldEnum)[keyof typeof FollowRequestScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  content: 'content',
+  userId: 'userId',
+  postId: 'postId',
+  commentId: 'commentId',
+  followRequestId: 'followRequestId',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -7,7 +7,7 @@ export const registerSchema = z.object({
     // email: z.string().email("Invalid email address"),
     phoneNumber: z.string().regex(/^(98|97|91)\d{8}$/).length(10),
     password: z.string().min(6, "Password must be at least 6 characters long"),
-    phoneVarified: z.boolean()
+    phoneVerified: z.boolean()
 });
 export type registerValidatorType = z.infer<typeof registerSchema>;
 
@@ -31,6 +31,8 @@ export const profileSchema = z.object({
     .length(10)
     .optional(),
   gender: z.enum(["Male", "Female", "Prefer not to say"]).optional(),
+  isPrivate: z.boolean().optional(),
+
   // user_profile: z.string().url("Invalid URL").optional(),
 });
 

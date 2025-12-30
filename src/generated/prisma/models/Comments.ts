@@ -195,6 +195,7 @@ export type CommentsWhereInput = {
   replies?: Prisma.CommentsListRelationFilter
   parent?: Prisma.XOR<Prisma.CommentsNullableScalarRelationFilter, Prisma.CommentsWhereInput> | null
   likes?: Prisma.CommentLikeListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type CommentsOrderByWithRelationInput = {
@@ -209,6 +210,7 @@ export type CommentsOrderByWithRelationInput = {
   replies?: Prisma.CommentsOrderByRelationAggregateInput
   parent?: Prisma.CommentsOrderByWithRelationInput
   likes?: Prisma.CommentLikeOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type CommentsWhereUniqueInput = Prisma.AtLeast<{
@@ -226,6 +228,7 @@ export type CommentsWhereUniqueInput = Prisma.AtLeast<{
   replies?: Prisma.CommentsListRelationFilter
   parent?: Prisma.XOR<Prisma.CommentsNullableScalarRelationFilter, Prisma.CommentsWhereInput> | null
   likes?: Prisma.CommentLikeListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type CommentsOrderByWithAggregationInput = {
@@ -261,6 +264,7 @@ export type CommentsCreateInput = {
   replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
   parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
   likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateInput = {
@@ -272,6 +276,7 @@ export type CommentsUncheckedCreateInput = {
   createdAt?: Date | string
   replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
   likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUpdateInput = {
@@ -283,6 +288,7 @@ export type CommentsUpdateInput = {
   replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
   parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
   likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateInput = {
@@ -294,6 +300,7 @@ export type CommentsUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
   likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsCreateManyInput = {
@@ -523,6 +530,22 @@ export type CommentsUpdateOneRequiredWithoutLikesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CommentsUpdateToOneWithWhereWithoutLikesInput, Prisma.CommentsUpdateWithoutLikesInput>, Prisma.CommentsUncheckedUpdateWithoutLikesInput>
 }
 
+export type CommentsCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutNotificationsInput, Prisma.CommentsUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.CommentsWhereUniqueInput
+}
+
+export type CommentsUpdateOneWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CommentsCreateWithoutNotificationsInput, Prisma.CommentsUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.CommentsCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.CommentsUpsertWithoutNotificationsInput
+  disconnect?: Prisma.CommentsWhereInput | boolean
+  delete?: Prisma.CommentsWhereInput | boolean
+  connect?: Prisma.CommentsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CommentsUpdateToOneWithWhereWithoutNotificationsInput, Prisma.CommentsUpdateWithoutNotificationsInput>, Prisma.CommentsUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type CommentsCreateWithoutUserInput = {
   id?: string
   text: string
@@ -531,6 +554,7 @@ export type CommentsCreateWithoutUserInput = {
   replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
   parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
   likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateWithoutUserInput = {
@@ -541,6 +565,7 @@ export type CommentsUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
   likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsCreateOrConnectWithoutUserInput = {
@@ -589,6 +614,7 @@ export type CommentsCreateWithoutPostInput = {
   replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
   parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
   likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateWithoutPostInput = {
@@ -599,6 +625,7 @@ export type CommentsUncheckedCreateWithoutPostInput = {
   createdAt?: Date | string
   replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
   likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsCreateOrConnectWithoutPostInput = {
@@ -635,6 +662,7 @@ export type CommentsCreateWithoutParentInput = {
   user: Prisma.UserCreateNestedOneWithoutCommentsInput
   replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
   likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateWithoutParentInput = {
@@ -645,6 +673,7 @@ export type CommentsUncheckedCreateWithoutParentInput = {
   createdAt?: Date | string
   replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
   likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsCreateOrConnectWithoutParentInput = {
@@ -665,6 +694,7 @@ export type CommentsCreateWithoutRepliesInput = {
   user: Prisma.UserCreateNestedOneWithoutCommentsInput
   parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
   likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateWithoutRepliesInput = {
@@ -675,6 +705,7 @@ export type CommentsUncheckedCreateWithoutRepliesInput = {
   text: string
   createdAt?: Date | string
   likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsCreateOrConnectWithoutRepliesInput = {
@@ -717,6 +748,7 @@ export type CommentsUpdateWithoutRepliesInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCommentsNestedInput
   parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
   likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutRepliesInput = {
@@ -727,6 +759,7 @@ export type CommentsUncheckedUpdateWithoutRepliesInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsCreateWithoutLikesInput = {
@@ -737,6 +770,7 @@ export type CommentsCreateWithoutLikesInput = {
   user: Prisma.UserCreateNestedOneWithoutCommentsInput
   replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
   parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsUncheckedCreateWithoutLikesInput = {
@@ -747,6 +781,7 @@ export type CommentsUncheckedCreateWithoutLikesInput = {
   text: string
   createdAt?: Date | string
   replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCommentInput
 }
 
 export type CommentsCreateOrConnectWithoutLikesInput = {
@@ -773,6 +808,7 @@ export type CommentsUpdateWithoutLikesInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCommentsNestedInput
   replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
   parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutLikesInput = {
@@ -783,6 +819,67 @@ export type CommentsUncheckedUpdateWithoutLikesInput = {
   text?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
+}
+
+export type CommentsCreateWithoutNotificationsInput = {
+  id?: string
+  text: string
+  createdAt?: Date | string
+  post: Prisma.PostCreateNestedOneWithoutCommentsInput
+  user: Prisma.UserCreateNestedOneWithoutCommentsInput
+  replies?: Prisma.CommentsCreateNestedManyWithoutParentInput
+  parent?: Prisma.CommentsCreateNestedOneWithoutRepliesInput
+  likes?: Prisma.CommentLikeCreateNestedManyWithoutCommentInput
+}
+
+export type CommentsUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  postId: string
+  userId: string
+  parentCommentId?: string | null
+  text: string
+  createdAt?: Date | string
+  replies?: Prisma.CommentsUncheckedCreateNestedManyWithoutParentInput
+  likes?: Prisma.CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+}
+
+export type CommentsCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.CommentsWhereUniqueInput
+  create: Prisma.XOR<Prisma.CommentsCreateWithoutNotificationsInput, Prisma.CommentsUncheckedCreateWithoutNotificationsInput>
+}
+
+export type CommentsUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.CommentsUpdateWithoutNotificationsInput, Prisma.CommentsUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.CommentsCreateWithoutNotificationsInput, Prisma.CommentsUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.CommentsWhereInput
+}
+
+export type CommentsUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.CommentsWhereInput
+  data: Prisma.XOR<Prisma.CommentsUpdateWithoutNotificationsInput, Prisma.CommentsUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type CommentsUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  post?: Prisma.PostUpdateOneRequiredWithoutCommentsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCommentsNestedInput
+  replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
+  parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
+  likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+}
+
+export type CommentsUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  postId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  text?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
+  likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsCreateManyUserInput = {
@@ -801,6 +898,7 @@ export type CommentsUpdateWithoutUserInput = {
   replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
   parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
   likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutUserInput = {
@@ -811,6 +909,7 @@ export type CommentsUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
   likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateManyWithoutUserInput = {
@@ -837,6 +936,7 @@ export type CommentsUpdateWithoutPostInput = {
   replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
   parent?: Prisma.CommentsUpdateOneWithoutRepliesNestedInput
   likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutPostInput = {
@@ -847,6 +947,7 @@ export type CommentsUncheckedUpdateWithoutPostInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
   likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateManyWithoutPostInput = {
@@ -873,6 +974,7 @@ export type CommentsUpdateWithoutParentInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCommentsNestedInput
   replies?: Prisma.CommentsUpdateManyWithoutParentNestedInput
   likes?: Prisma.CommentLikeUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateWithoutParentInput = {
@@ -883,6 +985,7 @@ export type CommentsUncheckedUpdateWithoutParentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.CommentsUncheckedUpdateManyWithoutParentNestedInput
   likes?: Prisma.CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCommentNestedInput
 }
 
 export type CommentsUncheckedUpdateManyWithoutParentInput = {
@@ -901,11 +1004,13 @@ export type CommentsUncheckedUpdateManyWithoutParentInput = {
 export type CommentsCountOutputType = {
   replies: number
   likes: number
+  notifications: number
 }
 
 export type CommentsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   replies?: boolean | CommentsCountOutputTypeCountRepliesArgs
   likes?: boolean | CommentsCountOutputTypeCountLikesArgs
+  notifications?: boolean | CommentsCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -932,6 +1037,13 @@ export type CommentsCountOutputTypeCountLikesArgs<ExtArgs extends runtime.Types.
   where?: Prisma.CommentLikeWhereInput
 }
 
+/**
+ * CommentsCountOutputType without action
+ */
+export type CommentsCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type CommentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -945,6 +1057,7 @@ export type CommentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   replies?: boolean | Prisma.Comments$repliesArgs<ExtArgs>
   parent?: boolean | Prisma.Comments$parentArgs<ExtArgs>
   likes?: boolean | Prisma.Comments$likesArgs<ExtArgs>
+  notifications?: boolean | Prisma.Comments$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.CommentsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comments"]>
 
@@ -988,6 +1101,7 @@ export type CommentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   replies?: boolean | Prisma.Comments$repliesArgs<ExtArgs>
   parent?: boolean | Prisma.Comments$parentArgs<ExtArgs>
   likes?: boolean | Prisma.Comments$likesArgs<ExtArgs>
+  notifications?: boolean | Prisma.Comments$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.CommentsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CommentsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1009,6 +1123,7 @@ export type $CommentsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     replies: Prisma.$CommentsPayload<ExtArgs>[]
     parent: Prisma.$CommentsPayload<ExtArgs> | null
     likes: Prisma.$CommentLikePayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1416,6 +1531,7 @@ export interface Prisma__CommentsClient<T, Null = never, ExtArgs extends runtime
   replies<T extends Prisma.Comments$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comments$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   parent<T extends Prisma.Comments$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comments$parentArgs<ExtArgs>>): Prisma.Prisma__CommentsClient<runtime.Types.Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   likes<T extends Prisma.Comments$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comments$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.Comments$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Comments$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1911,6 +2027,30 @@ export type Comments$likesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.CommentLikeScalarFieldEnum | Prisma.CommentLikeScalarFieldEnum[]
+}
+
+/**
+ * Comments.notifications
+ */
+export type Comments$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

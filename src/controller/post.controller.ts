@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
-import { CommentService} from "../services/post.service";
+import { CommentService, EditPost, softDeletePost} from "../services/post.service";
 import { AuthRequest } from "../middleware/auth";
 import * as PostService from "../services/post.service";
 
@@ -23,16 +23,69 @@ export const CreatePostController = async (req: Request, res: Response) => {
   }
 };
 
-// Get feed
-export const GetFeedController = async (req: Request, res: Response) => {
+export const editPostController = async (req: Request, res: Response) => {
   try {
-    const posts = await PostService.getFeedPosts();
+       const userId = (req as any).user?.id;
+    const { postId } = req.params;
+    const { caption, urls } = req.body;
+
+    const post = await EditPost({
+      postId,
+      userId,
+      caption,
+      urls,
+      
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Post updated successfully",
+      post,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update post",
+    });
+  }
+};
+
+//soft delete
+export const SoftDeletePostController = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const userId = req.user!.id;
+    const { postId } = req.params;
+
+    await PostService.softDeletePost(postId, userId);
+
+    res.status(200).json({
+      success: true,
+      message: "Post deleted successfully",
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to delete post",
+    });
+  }
+};
+
+
+// Get feed
+export const GetFeedController = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user!.id;
+    const posts = await PostService.getFeedPosts(userId);
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch feed" });
   }
 };
+
 
 
 
@@ -129,4 +182,26 @@ return res.json({ liked: !existing, likesCount });
     res.status(500).json({ message: "Failed to toggle comment like" });
   }
 };
+
+export const GetPostByIdController = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.user!.id;
+
+    const post = await PostService.getPostByIdService(postId, userId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json(post);
+  } catch (err) {
+    console.error("Get post by id error:", err);
+    res.status(500).json({ message: "Failed to fetch post" });
+  }
+};
+
 

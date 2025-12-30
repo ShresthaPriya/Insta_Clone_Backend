@@ -134,7 +134,7 @@ export const verifyOtp = async (data: otpValidatorType) => {
     userName: userInfo.userName,
     phoneNumber: userInfo.phoneNumber,
     password: userInfo.password,
-    phoneVarified: true
+    phoneVerified: true
   });
 
   await prisma.otp.delete({ where: { id: otpRec.id } });

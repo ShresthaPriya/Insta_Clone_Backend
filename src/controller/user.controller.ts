@@ -7,9 +7,7 @@ import {
   getUserProfilePost, 
   getMe, 
   editUserProfile, 
-  followUser, 
-  getSuggestions ,
- 
+  updateAccountPrivacy,
 } from "../services/user.service";
 import { AuthRequest } from "../middleware/auth";
 
@@ -62,28 +60,27 @@ export const getUsersController = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getSuggestionsController = async (req: AuthRequest, res: Response) => {
+export const updateAccountPrivacyController = async (
+  req: AuthRequest,
+  res: Response
+) => {
   try {
-    const suggestions = await getSuggestions(req.user!.id);
-    res.status(200).json(suggestions);
+    const { isPrivate } = req.body;
+
+    if (typeof isPrivate !== "boolean") {
+      return res.status(400).json({ message: "Invalid privacy value" });
+    }
+
+    const user = await updateAccountPrivacy(req.user!.id, isPrivate);
+
+    res.status(200).json(user);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch suggestions" });
+    res.status(500).json({ message: "Failed to update privacy" });
   }
 };
 
 
-export const followUserController = async (req: AuthRequest, res: Response) => {
-  try {
-    const targetUserId = req.params.id;
-    const result = await followUser(req.user!.id, targetUserId);
-    res.status(200).json(result);
-  } catch (err: any) {
-    console.error(err);
-    res.status(400).json({ message: err.message || "Failed to follow/unfollow user" });
-  }
-};
 
 export const getUserProfilePostController = async (req: AuthRequest, res: Response) => {
   try {
@@ -133,28 +130,3 @@ export const editUserProfileController = async (req: AuthRequest, res: Response)
   }
 };
 
-export const getFollowersController = async (req: AuthRequest, res: Response) => {
-  try {
-    const { userId } = req.params;
-    const user = await getUserProfilePost({ userId }, req.user!.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ followers: user.followers });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to fetch followers" });
-  }
-};
-
-export const getFollowingController = async (req: AuthRequest, res: Response) => {
-  try {
-    const { userId } = req.params;
-    const user = await getUserProfilePost({ userId }, req.user!.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ following: user.following });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to fetch following" });
-  }
-};

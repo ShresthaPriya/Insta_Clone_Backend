@@ -72,3 +72,13 @@ export type CommentLike = Prisma.CommentLikeModel
  * 
  */
 export type UserFollows = Prisma.UserFollowsModel
+/**
+ * Model FollowRequest
+ * 
+ */
+export type FollowRequest = Prisma.FollowRequestModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
