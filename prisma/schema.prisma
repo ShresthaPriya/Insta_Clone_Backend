@@ -171,6 +171,8 @@ model FollowRequest {
   receiverId String
   receiver   User @relation("ReceivedRequestsRelation", fields: [receiverId], references: [id], onDelete: Cascade)
 
+  status String @default("PENDING")
+
   notifications Notification[] @relation("FollowRequestNotifications")
 
   createdAt DateTime @default(now())

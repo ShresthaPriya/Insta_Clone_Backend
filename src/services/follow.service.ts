@@ -176,13 +176,14 @@ export const acceptFollowRequest = async (
     },
   });
 
-  await prisma.followRequest.delete({
+  await prisma.followRequest.update({
     where: { id: followRequestId },
+    data: { status: "ACCEPTED" },
   });
 
   await prisma.notification.updateMany({
     where: { followRequestId },
-    data: { isRead: true },  
+    data: { isRead: true },
   });
 
   await createNotification({
@@ -200,8 +201,6 @@ export const acceptFollowRequest = async (
   return { accepted: true, newFollower };
 };
 
-
-
 export const rejectFollowRequest = async (
   currentUserId: string,
   followRequestId: string
@@ -211,21 +210,21 @@ export const rejectFollowRequest = async (
   });
 
   if (!request || request.receiverId !== currentUserId) {
-    throw new Error("Request not found");
+    throw new Error("Follow request not found");
   }
 
-  await prisma.notification.deleteMany({
-    where: { followRequestId },
+  await prisma.followRequest.update({
+    where: { id: followRequestId },
+    data: { status: "REJECTED" },
   });
 
-  await prisma.followRequest.delete({
-    where: { id: followRequestId },
+  await prisma.notification.updateMany({
+    where: { followRequestId },
+    data: { isRead: true },
   });
 
   return { rejected: true };
 };
-
-
 
 export const cancelFollowRequest = async (currentUserId: string, targetUserId: string) => {
   const request = await prisma.followRequest.findUnique({
@@ -234,8 +233,15 @@ export const cancelFollowRequest = async (currentUserId: string, targetUserId: s
 
   if (!request) return { requested: false };
 
-  await prisma.notification.deleteMany({ where: { followRequestId: request.id } });
-  await prisma.followRequest.delete({ where: { id: request.id } });
+  await prisma.followRequest.update({
+    where: { id: request.id },
+    data: { status: "REJECTED" },
+  });
+
+  await prisma.notification.updateMany({
+    where: { followRequestId: request.id },
+    data: { isRead: true },
+  });
 
   return { following: false, requested: false };
 };
@@ -251,14 +257,42 @@ export const unfollowUser = async (currentUserId: string, targetUserId: string) 
 
 
 export const getFollowState = async (currentUserId: string, targetUserId: string) => {
-  const [follow, request] = await Promise.all([
-    prisma.userFollows.findUnique({
-      where: { followerId_followingId: { followerId: currentUserId, followingId: targetUserId } },
-    }),
-    prisma.followRequest.findUnique({
-      where: { senderId_receiverId: { senderId: currentUserId, receiverId: targetUserId } },
-    }),
-  ]);
+  const follow = await prisma.userFollows.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId: currentUserId,
+        followingId: targetUserId,
+      },
+    },
+  });
 
-  return { isFollowing: !!follow, isRequested: !!request };
+  const followRequest = await prisma.followRequest.findUnique({
+    where: {
+      senderId_receiverId: {
+        senderId: currentUserId,
+        receiverId: targetUserId,
+      },
+    },
+  });
+
+  let isFollowing = !!follow;
+  let isRequested = false;
+  let requestStatus: "PENDING" | "ACCEPTED" | "REJECTED" | null = null;
+
+  if (followRequest) {
+    requestStatus = followRequest.status as "PENDING" | "ACCEPTED" | "REJECTED"; // ✅ cast here
+    if (requestStatus === "PENDING") {
+      isRequested = true;
+    } else if (requestStatus === "ACCEPTED") {
+      isFollowing = true;
+    }
+  }
+
+  return {
+    isFollowing,
+    isRequested,
+    requestStatus,
+  };
 };
+
+

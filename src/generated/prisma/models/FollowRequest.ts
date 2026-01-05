@@ -28,6 +28,7 @@ export type FollowRequestMinAggregateOutputType = {
   id: string | null
   senderId: string | null
   receiverId: string | null
+  status: string | null
   createdAt: Date | null
 }
 
@@ -35,6 +36,7 @@ export type FollowRequestMaxAggregateOutputType = {
   id: string | null
   senderId: string | null
   receiverId: string | null
+  status: string | null
   createdAt: Date | null
 }
 
@@ -42,6 +44,7 @@ export type FollowRequestCountAggregateOutputType = {
   id: number
   senderId: number
   receiverId: number
+  status: number
   createdAt: number
   _all: number
 }
@@ -51,6 +54,7 @@ export type FollowRequestMinAggregateInputType = {
   id?: true
   senderId?: true
   receiverId?: true
+  status?: true
   createdAt?: true
 }
 
@@ -58,6 +62,7 @@ export type FollowRequestMaxAggregateInputType = {
   id?: true
   senderId?: true
   receiverId?: true
+  status?: true
   createdAt?: true
 }
 
@@ -65,6 +70,7 @@ export type FollowRequestCountAggregateInputType = {
   id?: true
   senderId?: true
   receiverId?: true
+  status?: true
   createdAt?: true
   _all?: true
 }
@@ -145,6 +151,7 @@ export type FollowRequestGroupByOutputType = {
   id: string
   senderId: string
   receiverId: string
+  status: string
   createdAt: Date
   _count: FollowRequestCountAggregateOutputType | null
   _min: FollowRequestMinAggregateOutputType | null
@@ -173,6 +180,7 @@ export type FollowRequestWhereInput = {
   id?: Prisma.StringFilter<"FollowRequest"> | string
   senderId?: Prisma.StringFilter<"FollowRequest"> | string
   receiverId?: Prisma.StringFilter<"FollowRequest"> | string
+  status?: Prisma.StringFilter<"FollowRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowRequest"> | Date | string
   sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -183,6 +191,7 @@ export type FollowRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   senderId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   sender?: Prisma.UserOrderByWithRelationInput
   receiver?: Prisma.UserOrderByWithRelationInput
@@ -197,6 +206,7 @@ export type FollowRequestWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FollowRequestWhereInput | Prisma.FollowRequestWhereInput[]
   senderId?: Prisma.StringFilter<"FollowRequest"> | string
   receiverId?: Prisma.StringFilter<"FollowRequest"> | string
+  status?: Prisma.StringFilter<"FollowRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowRequest"> | Date | string
   sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -207,6 +217,7 @@ export type FollowRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   senderId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.FollowRequestCountOrderByAggregateInput
   _max?: Prisma.FollowRequestMaxOrderByAggregateInput
@@ -220,11 +231,13 @@ export type FollowRequestScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"FollowRequest"> | string
   senderId?: Prisma.StringWithAggregatesFilter<"FollowRequest"> | string
   receiverId?: Prisma.StringWithAggregatesFilter<"FollowRequest"> | string
+  status?: Prisma.StringWithAggregatesFilter<"FollowRequest"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FollowRequest"> | Date | string
 }
 
 export type FollowRequestCreateInput = {
   id?: string
+  status?: string
   createdAt?: Date | string
   sender: Prisma.UserCreateNestedOneWithoutRequestSentInput
   receiver: Prisma.UserCreateNestedOneWithoutRequestReceiveInput
@@ -235,12 +248,14 @@ export type FollowRequestUncheckedCreateInput = {
   id?: string
   senderId: string
   receiverId: string
+  status?: string
   createdAt?: Date | string
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutFollowRequestInput
 }
 
 export type FollowRequestUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sender?: Prisma.UserUpdateOneRequiredWithoutRequestSentNestedInput
   receiver?: Prisma.UserUpdateOneRequiredWithoutRequestReceiveNestedInput
@@ -251,6 +266,7 @@ export type FollowRequestUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   senderId?: Prisma.StringFieldUpdateOperationsInput | string
   receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutFollowRequestNestedInput
 }
@@ -259,11 +275,13 @@ export type FollowRequestCreateManyInput = {
   id?: string
   senderId: string
   receiverId: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type FollowRequestUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -271,6 +289,7 @@ export type FollowRequestUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   senderId?: Prisma.StringFieldUpdateOperationsInput | string
   receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -293,6 +312,7 @@ export type FollowRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   senderId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -300,6 +320,7 @@ export type FollowRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   senderId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -307,6 +328,7 @@ export type FollowRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   senderId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -417,6 +439,7 @@ export type FollowRequestUpdateOneWithoutNotificationsNestedInput = {
 
 export type FollowRequestCreateWithoutSenderInput = {
   id?: string
+  status?: string
   createdAt?: Date | string
   receiver: Prisma.UserCreateNestedOneWithoutRequestReceiveInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutFollowRequestInput
@@ -425,6 +448,7 @@ export type FollowRequestCreateWithoutSenderInput = {
 export type FollowRequestUncheckedCreateWithoutSenderInput = {
   id?: string
   receiverId: string
+  status?: string
   createdAt?: Date | string
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutFollowRequestInput
 }
@@ -441,6 +465,7 @@ export type FollowRequestCreateManySenderInputEnvelope = {
 
 export type FollowRequestCreateWithoutReceiverInput = {
   id?: string
+  status?: string
   createdAt?: Date | string
   sender: Prisma.UserCreateNestedOneWithoutRequestSentInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutFollowRequestInput
@@ -449,6 +474,7 @@ export type FollowRequestCreateWithoutReceiverInput = {
 export type FollowRequestUncheckedCreateWithoutReceiverInput = {
   id?: string
   senderId: string
+  status?: string
   createdAt?: Date | string
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutFollowRequestInput
 }
@@ -486,6 +512,7 @@ export type FollowRequestScalarWhereInput = {
   id?: Prisma.StringFilter<"FollowRequest"> | string
   senderId?: Prisma.StringFilter<"FollowRequest"> | string
   receiverId?: Prisma.StringFilter<"FollowRequest"> | string
+  status?: Prisma.StringFilter<"FollowRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowRequest"> | Date | string
 }
 
@@ -507,6 +534,7 @@ export type FollowRequestUpdateManyWithWhereWithoutReceiverInput = {
 
 export type FollowRequestCreateWithoutNotificationsInput = {
   id?: string
+  status?: string
   createdAt?: Date | string
   sender: Prisma.UserCreateNestedOneWithoutRequestSentInput
   receiver: Prisma.UserCreateNestedOneWithoutRequestReceiveInput
@@ -516,6 +544,7 @@ export type FollowRequestUncheckedCreateWithoutNotificationsInput = {
   id?: string
   senderId: string
   receiverId: string
+  status?: string
   createdAt?: Date | string
 }
 
@@ -537,6 +566,7 @@ export type FollowRequestUpdateToOneWithWhereWithoutNotificationsInput = {
 
 export type FollowRequestUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sender?: Prisma.UserUpdateOneRequiredWithoutRequestSentNestedInput
   receiver?: Prisma.UserUpdateOneRequiredWithoutRequestReceiveNestedInput
@@ -546,23 +576,27 @@ export type FollowRequestUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   senderId?: Prisma.StringFieldUpdateOperationsInput | string
   receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FollowRequestCreateManySenderInput = {
   id?: string
   receiverId: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type FollowRequestCreateManyReceiverInput = {
   id?: string
   senderId: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type FollowRequestUpdateWithoutSenderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receiver?: Prisma.UserUpdateOneRequiredWithoutRequestReceiveNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutFollowRequestNestedInput
@@ -571,6 +605,7 @@ export type FollowRequestUpdateWithoutSenderInput = {
 export type FollowRequestUncheckedUpdateWithoutSenderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutFollowRequestNestedInput
 }
@@ -578,11 +613,13 @@ export type FollowRequestUncheckedUpdateWithoutSenderInput = {
 export type FollowRequestUncheckedUpdateManyWithoutSenderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   receiverId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FollowRequestUpdateWithoutReceiverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sender?: Prisma.UserUpdateOneRequiredWithoutRequestSentNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutFollowRequestNestedInput
@@ -591,6 +628,7 @@ export type FollowRequestUpdateWithoutReceiverInput = {
 export type FollowRequestUncheckedUpdateWithoutReceiverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   senderId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutFollowRequestNestedInput
 }
@@ -598,6 +636,7 @@ export type FollowRequestUncheckedUpdateWithoutReceiverInput = {
 export type FollowRequestUncheckedUpdateManyWithoutReceiverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   senderId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -636,6 +675,7 @@ export type FollowRequestSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   senderId?: boolean
   receiverId?: boolean
+  status?: boolean
   createdAt?: boolean
   sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -647,6 +687,7 @@ export type FollowRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   senderId?: boolean
   receiverId?: boolean
+  status?: boolean
   createdAt?: boolean
   sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -656,6 +697,7 @@ export type FollowRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   senderId?: boolean
   receiverId?: boolean
+  status?: boolean
   createdAt?: boolean
   sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -665,10 +707,11 @@ export type FollowRequestSelectScalar = {
   id?: boolean
   senderId?: boolean
   receiverId?: boolean
+  status?: boolean
   createdAt?: boolean
 }
 
-export type FollowRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "senderId" | "receiverId" | "createdAt", ExtArgs["result"]["followRequest"]>
+export type FollowRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "senderId" | "receiverId" | "status" | "createdAt", ExtArgs["result"]["followRequest"]>
 export type FollowRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -695,6 +738,7 @@ export type $FollowRequestPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: string
     senderId: string
     receiverId: string
+    status: string
     createdAt: Date
   }, ExtArgs["result"]["followRequest"]>
   composites: {}
@@ -1125,6 +1169,7 @@ export interface FollowRequestFieldRefs {
   readonly id: Prisma.FieldRef<"FollowRequest", 'String'>
   readonly senderId: Prisma.FieldRef<"FollowRequest", 'String'>
   readonly receiverId: Prisma.FieldRef<"FollowRequest", 'String'>
+  readonly status: Prisma.FieldRef<"FollowRequest", 'String'>
   readonly createdAt: Prisma.FieldRef<"FollowRequest", 'DateTime'>
 }
     

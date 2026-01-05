@@ -174,6 +174,7 @@ export const FollowRequestScalarFieldEnum = {
   id: 'id',
   senderId: 'senderId',
   receiverId: 'receiverId',
+  status: 'status',
   createdAt: 'createdAt'
 } as const
 
